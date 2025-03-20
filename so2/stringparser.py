@@ -1,0 +1,22 @@
+import os
+from langchain_core.prompts import PromptTemplate
+from dotenv import load_dotenv
+from langchain_google_genai import GoogleGenerativeAI
+
+
+# Load environment variables
+load_dotenv()
+
+model=GoogleGenerativeAI(model='gemini-1.5-pro')
+
+template1 = PromptTemplate.from_template("Write a detailed report on {topic}")
+template2 = PromptTemplate.from_template("Write a 5-line summary on the following text:\n{text}")
+
+prompt1 = template1.format(topic="black hole")
+result1 = model.invoke(prompt1)
+
+prompt2 = template2.format(text=result1)
+result2 = model.invoke(prompt2)
+
+# ✅ Print final summary
+print(result2)
